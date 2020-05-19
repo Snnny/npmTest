@@ -38,7 +38,7 @@ function tag(version = 'patch') {
       const data = execSync(`npm version ${version}`)
       logger.info(`版本号为: ${data}`)
       execSync('git add package.json')
-      execSync('git commit -m "Publish"')
+      execSync("git commit -m 'Publish' ")
       execSync(`git tag ${data}`)
       execSync(`git push origin ${data}`)
       execSync('git push')
