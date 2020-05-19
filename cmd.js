@@ -38,8 +38,15 @@ function tag(version = 'patch', description) {
       const data = execSync(`npm version ${version}`)
       logger.info(`版本号为: ${data}`)
 
+      // execSync(`git tag -a ${data} -m "${description}" `)
+      // execSync(`git push origin --tags`)
+
+      execSync('git add .')
+      execSync(`git commit -m '${description}' `)
       execSync(`git tag -a ${data} -m "${description}" `)
-      execSync(`git push origin --tags`)
+      execSync(`git push origin ${data}`)
+      execSync('git push')
+
       // execSync('git add .')
       // execSync('git status')
       // execSync("git commit -m 'Publish' ")
