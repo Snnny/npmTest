@@ -44,7 +44,7 @@ function tag(version = 'patch', description) {
       logger.info(`版本号为: ${data}`)
       // execSync(`git tag -a ${data} -m "${description}" `)
       execSync(`git push origin ${data}`)
-      // execSync('git push')
+      execSync('git push')
 
       // execSync('git add .')
       // execSync('git status')
