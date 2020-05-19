@@ -25,24 +25,27 @@ var { logger } = require('./logger');
       console.log(version, CustomVersion, description, execSync)
       logger.info('执行提交', version, 'end')
       // execSync(`npm version ${version}`)
-      tag(version === 'CustomVersion' ? CustomVersion : version);
+      tag(version === 'CustomVersion' ? CustomVersion : version, description);
     } catch(e) {
       logger.error(e)
     }
   })
 })();
 
-function tag(version = 'patch') {
+function tag(version = 'patch', description) {
   return new Promise((res, rej) => {
     try {
       const data = execSync(`npm version ${version}`)
       logger.info(`版本号为: ${data}`)
-      execSync('git add .')
-      execSync('git status')
-      execSync("git commit -m 'Publish' ")
-      execSync(`git tag ${data}`)
-      execSync(`git push origin ${data}`)
-      execSync('git push')
+
+      execSync(`git tag -a ${data} -m "${description}" `)
+      execSync(`git push origin --tags`)
+      // execSync('git add .')
+      // execSync('git status')
+      // execSync("git commit -m 'Publish' ")
+      // execSync(`git tag ${data}`)
+      // execSync(`git push origin ${data}`)
+      // execSync('git push')
       res(data)
     } catch (error) {
       logger.error(error)
