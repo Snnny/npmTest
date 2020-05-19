@@ -36,7 +36,7 @@ function tag(version = 'patch') {
   return new Promise((res, rej) => {
     try {
       const data = execSync(`npm version ${version}`)
-      logger(`版本号为: ${data}`)
+      logger.info(`版本号为: ${data}`)
       execSync('git add package.json')
       execSync('git commit -m "Publish"')
       execSync(`git tag ${data}`)
