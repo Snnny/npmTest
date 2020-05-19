@@ -42,7 +42,7 @@ function tag(version = 'patch', description) {
       execSync(`git commit -m '${description}' `)
       const data = execSync(`npm version ${version}`)
       logger.info(`版本号为: ${data}`)
-      execSync(`git tag -a ${data} -m "${description}" `)
+      // execSync(`git tag -a ${data} -m "${description}" `)
       execSync(`git push origin ${data}`)
       // execSync('git push')
 
