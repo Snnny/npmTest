@@ -24,8 +24,8 @@ var { logger } = require('./logger');
     try {
       console.log(version, CustomVersion, description, execSync)
       logger.info('执行提交', version, 'end')
-      execSync(`npm version ${version}`)
-      // tag(version === 'CustomVersion' ? CustomVersion : version);
+      // execSync(`npm version ${version}`)
+      tag(version === 'CustomVersion' ? CustomVersion : version);
     } catch(e) {
       logger.error(e)
     }
