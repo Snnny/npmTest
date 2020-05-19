@@ -1,7 +1,6 @@
 var inquirer = require('inquirer');
-
+const { execSync } = require('child_process');
 var { logger } = require('./logger');
-console.log('llll', logger, logger.error);
 (() => {
   inquirer.prompt([
     {
@@ -15,8 +14,21 @@ console.log('llll', logger, logger.error);
       message: '请输入版本号',
       when: ({ version }) => version === 'CustomVersion',
     },
-  ]).then(({version, CustomVersion})=> {
-    logger.info(version === 'CustomVersion' ? CustomVersion : version);
+    {
+      name: 'description',
+      message: '请输入描述信息',
+      type: 'input',
+    },
+  ]).then(({version, CustomVersion, description})=> {
+    // execSync(`npm version ${version}`)  {version, CustomVersion, description}
+    try {
+      console.log(version, CustomVersion, description, execSync)
+      logger.info('执行提交', version, 'end')
+      execSync(`npm version ${version}`)
+      // tag(version === 'CustomVersion' ? CustomVersion : version);
+    } catch(e) {
+      logger.error(e)
+    }
   })
 })();
 
@@ -37,3 +49,4 @@ function tag(version = 'patch') {
     }
   })
 }
+
