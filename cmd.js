@@ -53,17 +53,17 @@ function tag(version = 'patch', description, isClean) {
 
       data = execSync(`npm version ${version}`)
       execSync('git add package.json')
-      execSync(`git commit -m '${description}' `)
+      execSync(`git commit -m ${description} `)
       execSync(`git push origin ${data}`)
       execSync('git push')
 
 
       res(data)
     } catch (error) {
-      data = execSync(`npm version ${version}`)
-      logger.info(`版本号为: ${data}`)
-      execSync(`git push origin ${data}`)
-      execSync('git push')
+      // data = execSync(`npm version ${version}`)
+      // logger.info(`版本号为: ${data}`)
+      // execSync(`git push origin ${data}`)
+      // execSync('git push')
       logger.error(error)
       rej(error)
     }
