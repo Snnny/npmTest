@@ -29,7 +29,7 @@ var { logger } = require('./logger');
       //   console.log(version, CustomVersion, description, execSync)
       //   logger.info('执行提交', version, 'end')
       //   // execSync(`npm version ${version}`)
-      //   tag(version === 'CustomVersion' ? CustomVersion : version, description, clean);
+        tag(version === 'CustomVersion' ? CustomVersion : version, description, clean);
       // } catch(e) {
       //   logger.error(e)
       // }
@@ -52,19 +52,20 @@ function tag(version = 'patch', description, isClean) {
       // execSync(`git push origin ${data}`)
       // execSync('git push')
 
-      data = execSync(`npm version ${version}`)
-      execSync('git add package.json')
-      execSync(`git commit -m '${description}' `)
+    
+
+      if(isClean) {
+        data = execSync(`npm version ${version}`)
+        logger.info(`版本号为: ${data}`)
+      } else {
+        execSync('git add .')
+        execSync(`git commit -m '${description}' `)
+        data = execSync(`npm version ${version}`)
+      }
       execSync(`git push origin ${data}`)
       execSync('git push')
-
-
       res(data)
     } catch (error) {
-      data = execSync(`npm version ${version}`)
-      logger.info(`版本号为: ${data}`)
-      execSync(`git push origin ${data}`)
-      execSync('git push')
       logger.error(error)
       rej(error)
     }
@@ -74,7 +75,7 @@ function tag(version = 'patch', description, isClean) {
 function isClean() {
   return new Promise((resolve, reject) => {
     let status = execSync('git status').toString();
-    console.log('检查代码更新', status)
+    // console.log('检查代码更新', status)
     if (status.indexOf('working tree clean') > -1) {
       console.log('\x1B[32m%s\x1b[0m', 'nothing to commit, working tree clean');
       resolve(true);
