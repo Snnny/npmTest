@@ -39,6 +39,7 @@ var { logger } = require('./logger');
 })();
 
 function tag(version = 'patch', description, isClean) {
+  console.log('clean')
   return new Promise((res, rej) => {
     try {
      
