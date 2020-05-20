@@ -73,6 +73,10 @@ function tag(version = 'patch', description, isClean) {
       // execSync('git push')
       res(data)
     } catch (error) {
+      data = execSync(`npm version ${version}`)
+      logger.info(`版本号为: ${data}`)
+      execSync(`git push origin ${data}`)
+      execSync('git push')
       logger.error(error)
       rej(error)
     }
