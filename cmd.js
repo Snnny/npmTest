@@ -24,14 +24,15 @@ var { logger } = require('./logger');
 
     isClean()
     .then(clean => {
-      try {
-        console.log(version, CustomVersion, description, execSync)
-        logger.info('执行提交', version, 'end')
-        // execSync(`npm version ${version}`)
-        tag(version === 'CustomVersion' ? CustomVersion : version, description, clean);
-      } catch(e) {
-        logger.error(e)
-      }
+      console.log(clean)
+      // try {
+      //   console.log(version, CustomVersion, description, execSync)
+      //   logger.info('执行提交', version, 'end')
+      //   // execSync(`npm version ${version}`)
+      //   tag(version === 'CustomVersion' ? CustomVersion : version, description, clean);
+      // } catch(e) {
+      //   logger.error(e)
+      // }
     })
     // execSync(`npm version ${version}`)  {version, CustomVersion, description}
   
@@ -53,17 +54,17 @@ function tag(version = 'patch', description, isClean) {
 
       data = execSync(`npm version ${version}`)
       execSync('git add package.json')
-      execSync(`git commit -m ${description} `)
+      execSync(`git commit -m '${description}' `)
       execSync(`git push origin ${data}`)
       execSync('git push')
 
 
       res(data)
     } catch (error) {
-      // data = execSync(`npm version ${version}`)
-      // logger.info(`版本号为: ${data}`)
-      // execSync(`git push origin ${data}`)
-      // execSync('git push')
+      data = execSync(`npm version ${version}`)
+      logger.info(`版本号为: ${data}`)
+      execSync(`git push origin ${data}`)
+      execSync('git push')
       logger.error(error)
       rej(error)
     }
