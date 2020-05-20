@@ -73,7 +73,7 @@ function tag(version = 'patch', description, isClean) {
 
 function isClean() {
   return new Promise((resolve, reject) => {
-    let status = execSync('git status').toString;
+    let status = execSync('git status').toString();
     console.log('检查代码更新', status)
     if (status.find(item => /working tree clean/.test(item))) {
       console.log('\x1B[32m%s\x1b[0m', 'nothing to commit, working tree clean');
