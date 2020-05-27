@@ -52,6 +52,7 @@ function tag(version = 'patch', description, isClean) {
 
 function isClean() {
   let status = execSync('git status').toString();
+  
   if (status.indexOf('working tree clean') > -1) {
     console.log('\x1B[32m%s\x1b[0m', 'nothing to commit, working tree clean');
     return true
