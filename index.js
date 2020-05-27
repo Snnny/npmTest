@@ -14,6 +14,7 @@ function compare(current, latest) {
   if (len > 0) {
       type = 2;
   } else if (len < 0) {
+      
       type = 1;
   }
   len = Math.abs(len);
