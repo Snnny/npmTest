@@ -51,14 +51,11 @@ function tag(version = 'patch', description, isClean) {
 }
 
 function isClean() {
-  return new Promise((resolve, reject) => {
-    let status = execSync('git status').toString();
-    if (status.indexOf('working tree clean') > -1) {
-      console.log('\x1B[32m%s\x1b[0m', 'nothing to commit, working tree clean');
-      resolve(true);
-    } else {
-      resolve(false);
-    }
-  });
+  let status = execSync('git status').toString();
+  if (status.indexOf('working tree clean') > -1) {
+    console.log('\x1B[32m%s\x1b[0m', 'nothing to commit, working tree clean');
+    return true
+  } 
+  return false
 }
 
