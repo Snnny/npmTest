@@ -20,7 +20,7 @@ var { logger } = require('./logger');
     },
   ]).then(({version, description})=> {
     execSync(`git commit -a -m '${description}' `)
-    let data =  execSync(`npm version ${version}`)
+    let data =  execSync(`npm version ${version} -m ${description}`)
     execSync(`git push origin ${data}`)
     execSync('git push')
   })
