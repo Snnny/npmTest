@@ -20,7 +20,9 @@ var { logger } = require('./logger');
     },
   ]).then(({version, description})=> {
     if(!isClean()) {
-      execSync(`git commit -a -m '${description}' `)
+      execSync('git add .')
+      execSync(`git commit -m '${description}' `)
+      
     }
     let data =  execSync(`npm version ${version} -m ${description}`)
     execSync(`git push origin ${data}`)
@@ -52,7 +54,7 @@ function tag(version = 'patch', description, isClean) {
 
 function isClean() {
   let status = execSync('git status').toString();
-  
+
   if (status.indexOf('working tree clean') > -1) {
     console.log('\x1B[32m%s\x1b[0m', 'nothing to commit, working tree clean');
     return true
